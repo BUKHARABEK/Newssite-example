@@ -1,0 +1,29 @@
+{% load static %}
+
+<div class="mb-3">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Popular News</h4>
+    </div>
+    {% for post in posts %}
+    <div class="bg-white border border-top-0 p-3">
+        <div class="d-flex align-items-center bg-white mb-3" style="height: 110px;">
+
+            {% if post.photo %}
+            <img class="img-fluid w-50" src="{{ post.photo.url }}" alt="{{ post.title }}">
+            {% else %}
+            <img class="img-fluid w-50" src="{% static 'img/default.jpg' %}" alt="{{ post.title }}">
+            {% endif %}
+
+            <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
+                <div class="mb-2">
+                    <img class="rounded-circle mr-2" src="{% static 'img/user.jpg' %}" width="25"
+                         height="25" alt="">
+                    <small>{{ post.author }}</small>
+                </div>
+                <a class="h6 m-0 text-secondary text-uppercase font-weight-bold"
+                   href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

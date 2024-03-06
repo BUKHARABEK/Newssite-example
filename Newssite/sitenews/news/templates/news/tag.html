@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+Tag: {{ title }} - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- News Post Start -->
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg mt-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                             <h4 class="m-0 text-uppercase font-weight-bold">Tag: {{ title }}</h4>
+                        </div>
+                    </div>
+
+                    {% for post in posts %}
+                    <div class="col-lg-6">
+                        <div class="position-relative mb-3">
+
+                            {% if post.photo %}
+                            <img class="img-fluid w-100" src="{{ post.photo.url }}" alt="{{ post.title }}"
+                                 style="object-fit: cover;">
+                            {% else %}
+                            <img class="img-fluid w-100" src="{% static 'img/default.jpg' %}" alt="{{ post.title }}"
+                                 style="object-fit: cover;">
+                            {% endif %}
+
+                            <div class="bg-white border border-top-0 p-4">
+                                <a class="h4 d-block mb-3 text-secondary text-uppercase font-weight-bold"
+                                   href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                <p class="m-0">{{ post.content|truncatewords_html:50|safe }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between bg-white border border-top-0 p-4">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle mr-2" src="{% static 'img/user.jpg' %}" width="25"
+                                         height="25" alt="">
+                                    <small>{{ post.author }}</small>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <small class="ml-3"><i class="far fa-eye mr-2"></i>{{ post.views }}</small>
+                                    <small class="ml-3"><i class="far fa-calendar mr-2"></i>
+                                        {{ post.time_create|date:"d.m.Y" }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+
+            {% if page_obj.has_other_pages %}
+            <nav>
+                <ul class="pagination pagination-lg justify-content-center">
+                    <li class="page-item">
+                        {% if page_obj.has_previous %}
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"><i
+                                class="fa fa-angle-left" aria-hidden="true"></i></a>
+                        {% endif %}
+                    </li>
+
+                    {% for p in page_obj.paginator.page_range %}
+                    {% if page_obj.number == p %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">{{ p }}</a>
+                    </li>
+                    {% elif p > page_obj.number|add:-3 and p < page_obj.number|add:3 %}
+                    <li class="page-item"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    <li class="page-item">
+                        {% if page_obj.has_next %}
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}"><i
+                                class="fa fa-angle-right" aria-hidden="true"></i></a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<!-- News Post End -->
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load sidebar %}
+
+{% block title %}
+
+{{ post.title }} - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+<!-- News With Sidebar Start -->
+<div class="container-fluid mb-3 pt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- News Detail Start -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <div class="section-title" style="width: 1000px;">
+                            <ul>
+                                <h5 class="m-0 text-uppercase font-weight-bold">Category: <a
+                                        href="{{ post.category.get_absolute_url }}">{{ post.category }}</a></h5>
+                                <br>
+                                {% if post.tags.exists %}
+
+                                <h5 class="m-0 text-uppercase font-weight-bold">
+                                    Tags:
+                                    {% for tag in post.tags.all %}
+                                    <a href="{{ tag.get_absolute_url }}">{{ tag.name }} </a>
+                                    {% endfor %}
+                                </h5>
+
+                                {% endif %}
+                            </ul>
+
+                            <div class="d-flex align-items-center">
+                                <img class="rounded-circle mr-2" src="{% static 'img/user.jpg' %}" width="25"
+                                     height="25" alt="">
+                                <small>{{ post.author }}</small>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <small class="ml-3"><i class="far fa-eye mr-2"></i>{{ post.views }}</small>
+                                <small class="ml-3"><i class="far fa-calendar mr-2"> Time Create</i>
+                                    {{ post.time_create|date:"d.m.Y" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+
+                    {% if post.photo %}
+                    <img class="img-fluid w-100" src="{{ post.photo.url }}" alt="{{ post.title }}"
+                         style="object-fit: cover;">
+                    {% else %}
+                    <img class="img-fluid w-100" src="{% static 'img/default.jpg' %}" alt="{{ post.title }}"
+                         style="object-fit: cover;">
+                    {% endif %}
+
+                    <div class="bg-white border border-top-0 p-4">
+                        <h1 class="mb-3 text-secondary text-uppercase font-weight-bold">{{ post.title }}</h1>
+                        {{ post.content|safe }}
+                    </div>
+                </div>
+                <!-- News Detail End -->
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Popular News Start -->
+                {% get_popular %}
+                <!-- Popular News End -->
+
+                <!-- Categories Start -->
+                {% get_categories %}
+                <!-- Categories End -->
+
+                <!-- Tags Start -->
+                {% get_tags %}
+                <!-- Tags End -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- News With Sidebar End -->
+
+{% endblock %}

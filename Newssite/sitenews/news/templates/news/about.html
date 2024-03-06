@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{{ title }} - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title mt-3">
+                            <h4 class="m-0 text-uppercase font-weight-bold">It's example site for study himself</h4>
+                        </div>
+
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="btn btn-primary font-weight-semi-bold px-4" style="height: 50px; margin-bottom: 5px"
+                                    type="submit">Send</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

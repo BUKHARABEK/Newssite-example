@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{{ title }} - {{ block.super }}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title mt-3">
+                            <h4 class="m-0 text-uppercase font-weight-bold">{{ title }}</h4>
+                        </div>
+                    </div>
+
+                    <form method="POST">
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <div class="form-error">{{ form.non_field_errors }}</div>
+                            {% for f in form %}
+                            <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}
+                            </p>
+                            <div class="form-error">{{ f.errors }}</div>
+                            {% endfor %}
+                        </div>
+                        <button class="btn btn-primary font-weight-semi-bold px-4" style="height: 50px; margin-bottom: 5px"
+                                type="submit">Send</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

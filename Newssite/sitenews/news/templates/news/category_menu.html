@@ -1,0 +1,9 @@
+<div class="nav-item dropdown">
+    <a class="nav-link btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+       aria-expanded="false">Category</a>
+    <ul class="dropdown-menu">
+        {% for item in categories %}
+        <li><a class="dropdown-item" href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

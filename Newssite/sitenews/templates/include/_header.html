@@ -1,0 +1,38 @@
+{% load static %}
+{% load category_menu %}
+
+<!-- Navbar Start -->
+
+<div class="container-fluid p-0">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-2 py-lg-0 px-lg-5">
+        <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
+            <div class="navbar-nav mr-auto py-0">
+                <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                <a href="{% url 'addpage' %}" class="nav-item nav-link">Addpage</a>
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                {% show_category_menu %}
+            </div>
+
+            <div class="input-group ml-auto d-none d-lg-flex" style="width: 100%; max-width: 500px;">
+                <form action="{% url 'search' %}" method="get">
+                    <div class="input-group-append">
+                        <input type="text" name="search" class="form-control border-0" placeholder="Search">
+                        <button class="input-group-text bg-primary text-dark border-0 px-3" type="submit">
+                            <i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'users:profile' %}">Welcome {{ user.username }}<a href="{% url 'users:logout' %}" class="nav-item nav-link">Exit</a></a>
+                {% else %}
+                    <a><a href="{% url 'users:login' %}" class="nav-item nav-link">Login</a><a href="{% url 'users:register' %}" class="nav-item nav-link">Registration</a></a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Navbar End -->
